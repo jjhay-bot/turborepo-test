@@ -35,7 +35,7 @@ export default function Home() {
         <MuiLink component={Link} href="/deployment">
           View deployment guide →
         </MuiLink>
-        <MuiLink component={Link} href="/deployment">
+        <MuiLink component={Link} href="/design-system">
           Design System →
         </MuiLink>
       </Stack>
