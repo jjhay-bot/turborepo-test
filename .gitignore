@@ -1,0 +1,10 @@
+node_modules/
+.turbo/
+.next/
+.env
+.env.local
+.vercel/
+supabase/.temp/
+package-lock.json
+yarn.lock
+bun.lockb
