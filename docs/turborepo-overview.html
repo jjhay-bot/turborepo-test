@@ -1,0 +1,96 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="description" content="A quick guide to the planned Turborepo, Next.js, MUI, and Supabase stack." />
+  <title>Our Turborepo Plan</title>
+  <style>
+    :root { --bg:#faf7f4;--surface:#fff;--ink:#27201b;--muted:#75685e;--line:#eae1d9;--accent:#ed5a29;--soft:#fdeee7;--teal:#0a8f85;--teal-soft:#e2f3f1;--warn:#fff7ec;--code:#f4ede7; }
+    @media (prefers-color-scheme:dark) { :root { --bg:#161210;--surface:#211b17;--ink:#f1eae4;--muted:#a3968c;--line:#362d26;--accent:#f07048;--soft:#3a2419;--teal:#35b3a7;--teal-soft:#14312e;--warn:#2c2318;--code:#2b241f; } }
+    * { box-sizing:border-box; }
+    body { margin:0;padding:0 0 80px;background:var(--bg);color:var(--ink);font:15px/1.6 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif; }
+    .wrap { max-width:1080px;margin:auto;padding:52px 28px 0; }
+    .eyebrow,.label { color:var(--accent);font-size:11px;font-weight:800;letter-spacing:.14em;text-transform:uppercase; }
+    h1 { max-width:720px;margin:10px 0 12px;font-size:38px;line-height:1.15;letter-spacing:-.03em;text-wrap:balance; }
+    h2 { margin:7px 0 10px;font-size:26px;line-height:1.2;letter-spacing:-.02em;text-wrap:balance; } h3 { margin:0 0 7px;font-size:16px; }
+    p { margin:0 0 14px; }.lede,.intro { max-width:720px;color:var(--muted);font-size:16.5px; }.intro { margin-bottom:24px;font-size:15px; }
+    code { padding:1px 6px;border-radius:5px;background:var(--code);color:var(--ink);font:.88em ui-monospace,SFMono-Regular,Menlo,monospace; }
+    .chips { display:flex;flex-wrap:wrap;gap:8px;margin-top:20px; }.chip { padding:5px 11px;border:1px solid var(--line);border-radius:999px;background:var(--surface);color:var(--muted);font-size:12px;font-weight:700; }
+    section { margin-top:58px; }.summary { display:grid;grid-template-columns:62px 1fr;gap:18px;align-items:center;padding:24px;border:1px solid var(--line);border-radius:18px;background:var(--surface); }
+    .icon { display:grid;width:62px;height:62px;place-items:center;border-radius:16px;background:var(--soft);font-size:30px; }.summary p,.card p,.step p { margin:0;color:var(--muted); }
+    .flow { display:grid;grid-template-columns:1fr auto 1fr auto 1fr;gap:10px;align-items:stretch;margin-top:26px; }.flow-card { min-height:146px;padding:18px;border:1px solid var(--line);border-radius:14px;background:var(--surface); }.flow-card.accent { border-color:#f3c9b9;background:var(--soft); }.flow-card.teal { border-color:#bddfd8;background:var(--teal-soft); }.flow-card b { display:block;margin-bottom:8px; }.flow-card small { color:var(--muted);font-size:12px;line-height:1.45; }.arrow { align-self:center;color:var(--accent);font-size:26px;font-weight:800; }
+    .cols { display:grid;grid-template-columns:1fr 1fr;gap:18px; }.card { padding:21px 22px;border:1px solid var(--line);border-radius:16px;background:var(--surface); }.mini { margin-bottom:8px;color:var(--teal);font-size:11px;font-weight:800;letter-spacing:.08em;text-transform:uppercase; }
+    pre { min-width:600px;margin:0;padding:18px 20px;border:1px solid var(--line);border-radius:14px;background:var(--surface);font:13px/1.65 ui-monospace,SFMono-Regular,Menlo,monospace; }.scroll { overflow:auto;padding:2px 2px 10px; }
+    .steps { display:grid;gap:12px;margin-top:24px; }.step { display:grid;grid-template-columns:32px 1fr;gap:14px;padding:18px 20px;border:1px solid var(--line);border-radius:14px;background:var(--surface); }.num { display:grid;width:30px;height:30px;place-items:center;border-radius:50%;background:var(--accent);color:#fff;font-size:13px;font-weight:800; }
+    .note { margin-top:18px;padding:16px 18px;border-left:4px solid var(--accent);border-radius:9px;background:var(--warn);color:var(--muted); }.note strong { color:var(--ink); }
+    .checklist { display:grid;grid-template-columns:1fr 1fr;gap:10px 28px;margin:20px 0 0;padding:0;list-style:none; }.checklist li { color:var(--muted); }.checklist li::before { content:"☐";display:inline-block;width:25px;color:var(--accent);font-weight:800; }
+    .future { color:var(--muted);font-size:13px; }.future b { color:var(--ink); } footer { margin-top:68px;padding-top:20px;border-top:1px solid var(--line);color:var(--muted);font-size:12px; }
+    @media (max-width:700px) { .wrap { padding:38px 18px 0; }h1 { font-size:31px; }.summary,.cols,.checklist,.flow { grid-template-columns:1fr; }.icon { width:48px;height:48px;font-size:24px; }.arrow { justify-self:center;transform:rotate(90deg); } }
+  </style>
+</head>
+<body>
+  <main class="wrap">
+    <header>
+      <div class="eyebrow">Architecture guide · planned stack</div>
+      <h1>One workspace for today’s UIs and the shared system behind them</h1>
+      <p class="lede">We will build an Admin app and a School Portal with Next.js and MUI, use Supabase for the backend, and keep shared code in a Turborepo. A user-facing UI can be added later without reshaping the repository.</p>
+      <div class="chips"><span class="chip">Now: Admin + School Portal</span><span class="chip">Later: User UI</span><span class="chip">Backend: Supabase</span><span class="chip">Workspace: pnpm + Turborepo</span></div>
+    </header>
+
+    <section><div class="summary"><div class="icon">🧭</div><div><h3>The one-line explanation</h3><p><b>Turborepo keeps our Admin and School Portal together while letting them share the right code.</b> We still build pages with Next.js, style them with MUI, and use Supabase for sign-in, database, storage, and access rules.</p></div></div></section>
+
+    <section>
+      <div class="label">The simple picture</div><h2>How our pieces connect</h2><p class="intro">Two audiences use two focused web apps now. A third user-facing app can join later. All apps use the same Supabase backend and can share selected MUI components, themes, and database types.</p>
+      <div class="flow">
+        <div class="flow-card accent"><b>1. Turborepo workspace</b><small>One repository that knows about both apps and shared packages. It coordinates tasks such as development, checks, and builds.</small></div><div class="arrow">→</div>
+        <div class="flow-card"><b>2. Focused web apps</b><small><code>apps/admin</code> serves staff. <code>apps/school-portal</code> serves schools. Later, <code>apps/user</code> can serve end users. Each is Next.js + MUI.</small></div><div class="arrow">→</div>
+        <div class="flow-card teal"><b>3. Supabase</b><small>Authentication, PostgreSQL data, storage, and Row Level Security policies decide what each user may access.</small></div>
+      </div>
+    </section>
+
+    <section>
+      <div class="label">Clear boundaries</div><h2>What each tool does—and does not do</h2><p class="intro">Keeping responsibilities separate is what makes this stack easy to reason about.</p>
+      <div class="cols">
+        <article class="card"><div class="mini">Turborepo</div><h3>Organizes the repository</h3><p>Runs tasks across projects in the right order and caches unchanged work. It does <b>not</b> create UI, routes, or database tables.</p></article>
+        <article class="card"><div class="mini">Next.js</div><h3>Builds the web application</h3><p>Owns pages, routing, server-side code, and rendering. It does <b>not</b> replace Supabase or manage a multi-project workspace.</p></article>
+        <article class="card"><div class="mini">MUI</div><h3>Creates the interface</h3><p>Provides accessible components and a theme system for layouts, forms, dialogs, navigation, and data-heavy screens.</p></article>
+        <article class="card"><div class="mini">Supabase</div><h3>Provides backend services</h3><p>Owns authentication, database, storage, and authorization policies. It does <b>not</b> replace the user-facing Next.js app.</p></article>
+      </div>
+    </section>
+
+    <section>
+      <div class="label">Repository map</div><h2>What we will see in the project</h2><p class="intro">We keep the beginning small. Shared packages only appear when another app genuinely needs the same code.</p>
+      <div class="scroll"><pre>repository/
+├── apps/
+│   ├── admin/                # staff-facing Next.js + MUI app
+│   └── school-portal/        # school-facing Next.js + MUI app
+│   # later: user/             # user-facing Next.js + MUI app
+├── packages/
+│   ├── ui/                   # later: shared MUI theme/components
+│   └── database/             # later: shared generated Supabase types
+├── supabase/
+│   └── migrations/           # versioned database schema changes
+├── docs/                     # durable project documentation
+└── .notes/                   # local plans and review explainers</pre></div>
+      <p class="future"><b>Useful from day one:</b> <code>packages/ui</code> can hold shared MUI foundations, while <code>packages/database</code> can hold Supabase types used by both apps. Feature-specific code stays inside its own app.</p>
+    </section>
+
+    <section>
+      <div class="label">Day-to-day work</div><h2>What development feels like</h2>
+      <div class="steps">
+        <article class="step"><div class="num">1</div><div><h3>Build the feature in the right app</h3><p>Admin-only work stays in <code>apps/admin</code>; School Portal work stays in <code>apps/school-portal</code>. Both follow the same Next.js and MUI foundations.</p></div></article>
+        <article class="step"><div class="num">2</div><div><h3>Version data changes with Supabase</h3><p>When a feature needs data, create a migration in <code>supabase/migrations</code> and define the matching Row Level Security policy.</p></div></article>
+        <article class="step"><div class="num">3</div><div><h3>Share code only when it belongs to both apps</h3><p>Put stable shared MUI foundations in <code>packages/ui</code> and shared Supabase types in <code>packages/database</code>. Keep role-specific screens and business logic in their own app.</p></div></article>
+      </div>
+      <div class="note"><strong>The important part:</strong> Turborepo is valuable immediately because both apps can reuse one MUI foundation, database types, and shared configuration—without mixing Admin and School Portal feature code.</div>
+    </section>
+
+    <section>
+      <div class="label">Supabase safety</div><h2>Rules we will keep from day one</h2>
+      <ul class="checklist"><li>Every schema change is kept as a Supabase migration.</li><li>Application-facing tables use Row Level Security.</li><li>Public browser values use <code>NEXT_PUBLIC_*</code> only when safe.</li><li>The service-role key stays server-only and never enters Git.</li><li>Generated database types become shared only when multiple apps need them.</li><li>Reusable MUI components are promoted only after real reuse appears.</li></ul>
+    </section>
+    <footer>Quick decision: use Turborepo for organization, but think and build in Next.js + MUI + Supabase. The workspace grows with the product instead of forcing complexity into the first app.</footer>
+  </main>
+</body>
+</html>
