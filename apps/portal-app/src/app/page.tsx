@@ -41,6 +41,9 @@ export default function Home() {
         <MuiLink component={Link} href="/hanapdito-mvp">
           HanapDito MVP build concept →
         </MuiLink>
+        <MuiLink component={Link} href="/hanapdito-prototype">
+          Try HanapDito interactive prototype →
+        </MuiLink>
       </Stack>
     </Stack>
   );
