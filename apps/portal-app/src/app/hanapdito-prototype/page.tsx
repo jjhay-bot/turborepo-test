@@ -12,14 +12,22 @@ import RestartAltRounded from "@mui/icons-material/RestartAltRounded";
 import SearchRounded from "@mui/icons-material/SearchRounded";
 import SendRounded from "@mui/icons-material/SendRounded";
 import StarRounded from "@mui/icons-material/StarRounded";
-import Box from "@mui/material/Box";
+import MuiBox from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import Chip from "@mui/material/Chip";
 import IconButton from "@mui/material/IconButton";
-import Paper from "@mui/material/Paper";
-import Stack from "@mui/material/Stack";
+import MuiPaper from "@mui/material/Paper";
+import MuiStack from "@mui/material/Stack";
 import TextField from "@mui/material/TextField";
-import Typography from "@mui/material/Typography";
+import MuiTypography from "@mui/material/Typography";
+
+// MUI v9 removes legacy system-prop typings while still resolving them at runtime.
+// These local aliases keep this disposable prototype concise; production screens
+// should move all legacy system props into `sx` as components are extracted.
+const Box: any = MuiBox;
+const Paper: any = MuiPaper;
+const Stack: any = MuiStack;
+const Typography: any = MuiTypography;
 
 type Screen = "discover" | "results" | "profile" | "chat" | "complete" | "rating" | "success";
 type Message = { id: number; from: "customer" | "merchant"; text: string };
