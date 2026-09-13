@@ -12,7 +12,7 @@ importers:
         specifier: ^2.0.0
         version: 2.10.12
 
-  apps/admin:
+  apps/library-app:
     dependencies:
       '@emotion/cache':
         specifier: ^11.14.0
@@ -64,7 +64,7 @@ importers:
         specifier: ^5
         version: 5.9.3
 
-  apps/school-portal:
+  apps/portal-app:
     dependencies:
       '@emotion/cache':
         specifier: ^11.14.0

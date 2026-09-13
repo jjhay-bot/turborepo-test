@@ -1,10 +1,10 @@
 {
-  "name": "admin",
+  "name": "portal-app",
   "version": "0.1.0",
   "private": true,
   "scripts": {
     "preinstall": "node ../../scripts/enforce-package-manager.cjs",
-    "dev": "next dev --port 3000",
+    "dev": "next dev --port 3001",
     "build": "next build",
     "start": "next start",
     "lint": "eslint"
@@ -17,6 +17,8 @@
     "@mui/icons-material": "^9.4.0",
     "@mui/material": "^9.4.0",
     "@mui/material-nextjs": "^9.4.0",
+    "@mui/x-date-pickers": "^9.13.0",
+    "dayjs": "^1.11.23",
     "next": "16.3.4",
     "react": "19.2.8",
     "react-dom": "19.2.8"

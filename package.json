@@ -5,8 +5,8 @@
   "scripts": {
     "preinstall": "node scripts/enforce-package-manager.cjs",
     "dev": "turbo run dev",
-    "dev:admin": "pnpm --filter admin dev",
-    "dev:portal": "pnpm --filter school-portal dev",
+    "dev:library-app": "pnpm --filter library-app dev",
+    "dev:portal-app": "pnpm --filter portal-app dev",
     "build": "turbo run build",
     "lint": "turbo run lint",
     "typecheck": "turbo run typecheck"
