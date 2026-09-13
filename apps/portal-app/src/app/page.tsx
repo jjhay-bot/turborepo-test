@@ -38,6 +38,9 @@ export default function Home() {
         <MuiLink component={Link} href="/design-system">
           Design System →
         </MuiLink>
+        <MuiLink component={Link} href="/hanapdito-mvp">
+          HanapDito MVP build concept →
+        </MuiLink>
       </Stack>
     </Stack>
   );
