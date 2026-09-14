@@ -12,7 +12,7 @@ export const episodes = [
     thought: "A fresh start doesn't have to mean becoming a different person. Sometimes it simply means giving yourself another chance to make one good choice today.",
     song: "Unwritten",
     artist: "Natasha Bedingfield",
-    youtube: "https://www.youtube.com/results?search_query=Natasha+Bedingfield+Unwritten+official",
+    youtube: "https://www.youtube.com/watch?v=b7k0a5hYnSI",
   },
   {
     slug: "afternoon-nap-century",
