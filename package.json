@@ -7,6 +7,7 @@
     "dev": "turbo run dev",
     "dev:library-app": "pnpm --filter library-app dev",
     "dev:portal-app": "pnpm --filter portal-app dev",
+    "dev:coffee-break-reads": "pnpm --filter coffee-break-reads dev",
     "build": "turbo run build",
     "lint": "turbo run lint",
     "typecheck": "turbo run typecheck"
