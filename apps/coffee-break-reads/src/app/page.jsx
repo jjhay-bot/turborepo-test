@@ -1,20 +1,45 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { episodes } from "../data/episodes";
+
+function getYoutubeEmbedUrl(url) {
+  const videoId = new URL(url).searchParams.get("v");
+  return videoId
+    ? `https://www.youtube.com/embed/${videoId}?playsinline=1&rel=0`
+    : null;
+}
 
 export default function HomePage() {
   const [activeSlug, setActiveSlug] = useState(episodes[0].slug);
   const [expanded, setExpanded] = useState(false);
+  const [showPlayer, setShowPlayer] = useState(false);
 
   const activeEpisode = useMemo(
     () => episodes.find((episode) => episode.slug === activeSlug) ?? episodes[0],
     [activeSlug]
   );
 
+  const embedUrl = useMemo(
+    () => getYoutubeEmbedUrl(activeEpisode.youtube),
+    [activeEpisode.youtube]
+  );
+
+  useEffect(() => {
+    if (!expanded) return;
+
+    requestAnimationFrame(() => {
+      document.getElementById("article")?.scrollIntoView({
+        behavior: "smooth",
+        block: "start",
+      });
+    });
+  }, [expanded]);
+
   function selectEpisode(slug) {
     setActiveSlug(slug);
     setExpanded(false);
+    setShowPlayer(false);
     window.scrollTo({ top: 0, behavior: "smooth" });
   }
 
@@ -49,23 +74,35 @@ export default function HomePage() {
           )}
         </div>
 
-        <a
-          className="soundtrack-card"
-          href={activeEpisode.youtube}
-          target="_blank"
-          rel="noreferrer"
-        >
+        <div className={`soundtrack-card ${showPlayer ? "playing" : ""}`}>
           <div>
             <span className="soundtrack-label">🎧 Today's soundtrack</span>
             <strong>{activeEpisode.song}</strong>
             <span>{activeEpisode.artist}</span>
           </div>
-          <span className="play-pill">Play ↗</span>
-        </a>
+          <button
+            className="play-pill"
+            onClick={() => setShowPlayer((value) => !value)}
+            aria-expanded={showPlayer}
+          >
+            {showPlayer ? "Hide" : "Play"}
+          </button>
+        </div>
+
+        {showPlayer && embedUrl && (
+          <div className="inline-player">
+            <iframe
+              src={embedUrl}
+              title={`${activeEpisode.song} by ${activeEpisode.artist}`}
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+              allowFullScreen
+            />
+          </div>
+        )}
       </section>
 
       {expanded && (
-        <section className="article-section">
+        <section className="article-section" id="article">
           <div className="article-copy">
             {activeEpisode.body.map((paragraph) => (
               <p key={paragraph}>{paragraph}</p>
